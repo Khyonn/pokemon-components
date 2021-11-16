@@ -1,0 +1,62 @@
+@import "./breakpoints";
+
+@mixin only-mobiles {
+  @media screen and (max-width: map-get($breakpoints, mobiles)) {
+    @content;
+  }
+}
+
+@mixin only-tablets {
+  @media screen and (min-width: (map-get($breakpoints, mobiles) + 1px)) and (max-width: map-get($breakpoints, tablets)) {
+    @content;
+  }
+}
+
+@mixin only-laptops {
+  @media screen and (min-width: (map-get($breakpoints, tablets) + 1px)) and (max-width: map-get($breakpoints, laptops)) {
+    @content;
+  }
+}
+
+@mixin only-screens {
+  @media screen and (min-width: (map-get($breakpoints, laptops) + 1px)) and (max-width: map-get($breakpoints, screens)) {
+    @content;
+  }
+}
+
+@mixin tablets {
+  @media screen and (min-width: map-get($breakpoints, mobiles)) {
+    @content;
+  }
+}
+
+@mixin laptops {
+  @media screen and (min-width: map-get($breakpoints, tablets)) {
+    @content;
+  }
+}
+
+@mixin screens {
+  @media screen and (min-width: map-get($breakpoints, laptops)) {
+    @content;
+  }
+}
+
+@mixin large-screens {
+  @media screen and (min-width: map-get($breakpoints, screens)) {
+    @content;
+  }
+}
+
+@mixin sprite {
+  object-fit: none;
+  overflow: hidden;
+}
+
+@mixin screen {
+  position: relative;
+  display: inline-flex;
+  width: 18em;
+  height: 18em;
+  padding: 3px;
+}

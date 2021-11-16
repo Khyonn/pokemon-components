@@ -1,0 +1,27 @@
+@import "../../../../../assets/sass/utils/mixins";
+
+.wrapper {
+  @include screen;
+  flex-direction: column;
+}
+
+.main_content {
+  flex: 1;
+  display: flex;
+}
+
+@keyframes appearing {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.textbox {
+  animation: appearing 0.75s ease-in forwards;
+  &_skeleton {
+    height: 4em;
+  }
+}

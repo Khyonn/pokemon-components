@@ -1,0 +1,103 @@
+@import "../../../../../assets/sass/utils/mixins";
+
+.Lucas,
+.Dawn {
+  @include sprite;
+}
+
+@keyframes lucas_throwing_ball {
+  from,
+  19.99% {
+    width: 50px;
+    padding-left: 12px;
+    padding-right: 21px;
+    object-position: -301px -922px;
+  }
+  20%,
+  39.99% {
+    width: 50px;
+    padding-left: 12px;
+    padding-right: 21px;
+    object-position: -301px -922px;
+  }
+  40%,
+  59.99% {
+    width: 65px;
+    padding-left: 0;
+    padding-right: 18px;
+    object-position: -434px -922px;
+  }
+  60%,
+  79.99% {
+    width: 69px;
+    padding-left: 14px;
+    padding-right: 1px;
+    object-position: -511px -922px;
+  }
+  80%,
+  to {
+    width: 67px;
+    padding-left: 15px;
+    padding-right: 1px;
+    object-position: -592px -922px;
+  }
+}
+@keyframes dawn_throwing_ball {
+  from,
+  19.99% {
+    object-position: -305px -394px;
+    width: 56px;
+    padding-left: 12px;
+    padding-right: 20px;
+  }
+  20%,
+  39.99% {
+    object-position: -372px -394px;
+    width: 55px;
+    padding-left: 0;
+    padding-right: 33px;
+  }
+  40%,
+  59.99% {
+    object-position: -438px -394px;
+    width: 67px;
+    padding-left: 0;
+    padding-right: 21px;
+  }
+  60%,
+  79.99% {
+    object-position: -516px -394px;
+    width: 78px;
+    padding-left: 10px;
+    padding-right: 0;
+  }
+  80%,
+  to {
+    object-position: -605px -394px;
+    width: 75px;
+    padding-left: 6px;
+    padding-right: 7px;
+  }
+}
+
+.Lucas {
+  padding-top: 3px;
+  height: 60px;
+  width: 50px;
+  padding-left: 12px;
+  padding-right: 21px;
+  object-position: -301px -922px;
+  &.throwing_ball {
+    animation: lucas_throwing_ball 1.5s steps(5) both;
+  }
+}
+.Dawn {
+  height: 63px;
+  width: 56px;
+  object-position: -305px -394px;
+  padding-left: 12px;
+  padding-right: 20px;
+  &.throwing_ball {
+    animation: dawn_throwing_ball 1.5s steps(5) both;
+  }
+}

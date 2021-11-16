@@ -1,56 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { useState, useEffect } from "react";
+import OverworldHero, {
+  HeroDirection,
+} from "./app/shared/components/Characters/OverworldHero";
+import DynamicText from "./app/shared/components/Texts/DynamicText";
+import Title from "./app/shared/components/Texts/Title";
+import Pokemon from "./app/shared/components/InBattle/Pokemon";
+import "./assets/sass/layout/_flex.scss";
 
 function App() {
+  const [direction, setDirection] = useState<HeroDirection>("up");
+
+  useEffect(() => {
+    const directions: HeroDirection[] = ["up", "down", "left", "right"];
+    const interval = setInterval(() => {
+      setDirection(directions[Math.floor(Math.random() * 10) % 4]);
+    }, 2000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+    <div className="all-height flex column center">
+      <h1>
+        <Title>Pokémon</Title>
+      </h1>
+      <div>
+        <OverworldHero
+          character="Lucas"
+          movement="fishing"
+          direction={direction}
+        />
+        <OverworldHero
+          character="Dawn"
+          movement="fishing"
+          direction={direction}
+        />
+      </div>
+      <DynamicText>Bonjour bienvenue dans ce monde pokemon</DynamicText>
+      <Pokemon number={151} side="front_2" />
     </div>
   );
 }

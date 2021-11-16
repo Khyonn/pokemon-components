@@ -1,0 +1,31 @@
+{
+  "files": {
+    "0.3866d915.iframe.bundle.js": "./0.3866d915.iframe.bundle.js",
+    "main.css": "./static/css/main.d52f86f5.chunk.css",
+    "main.js": "./main.8e4830ce.iframe.bundle.js",
+    "main.css.map": "./static/css/main.d52f86f5.chunk.css.map",
+    "runtime~main.js": "./runtime~main.9d4f47cf.iframe.bundle.js",
+    "vendors~main.js": "./vendors~main.b39c1d4c.iframe.bundle.js",
+    "vendors~main.js.map": "./vendors~main.b39c1d4c.iframe.bundle.js.map",
+    "4.0713ff8e.iframe.bundle.js": "./4.0713ff8e.iframe.bundle.js",
+    "4.0713ff8e.iframe.bundle.js.map": "./4.0713ff8e.iframe.bundle.js.map",
+    "5.747b3216.iframe.bundle.js": "./5.747b3216.iframe.bundle.js",
+    "6.54facd8f.iframe.bundle.js": "./6.54facd8f.iframe.bundle.js",
+    "6.54facd8f.iframe.bundle.js.map": "./6.54facd8f.iframe.bundle.js.map",
+    "7.c3c1357d.iframe.bundle.js": "./7.c3c1357d.iframe.bundle.js",
+    "4.0713ff8e.iframe.bundle.js.LICENSE.txt": "./4.0713ff8e.iframe.bundle.js.LICENSE.txt",
+    "6.54facd8f.iframe.bundle.js.LICENSE.txt": "./6.54facd8f.iframe.bundle.js.LICENSE.txt",
+    "iframe.html": "./iframe.html",
+    "static/media/battle-grounds.700d9abb.png": "./static/media/battle-grounds.700d9abb.png",
+    "static/media/styles.module.scss": "./static/media/pokemon-title-solid.5d60be1f.ttf",
+    "static/media/lecture.b7d51993.png": "./static/media/lecture.b7d51993.png",
+    "static/media/pokemons-g1.aebde44d.png": "./static/media/pokemons-g1.aebde44d.png",
+    "vendors~main.b39c1d4c.iframe.bundle.js.LICENSE.txt": "./vendors~main.b39c1d4c.iframe.bundle.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "runtime~main.9d4f47cf.iframe.bundle.js",
+    "vendors~main.b39c1d4c.iframe.bundle.js",
+    "static/css/main.d52f86f5.chunk.css",
+    "main.8e4830ce.iframe.bundle.js"
+  ]
+}

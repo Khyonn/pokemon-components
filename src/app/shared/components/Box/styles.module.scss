@@ -1,0 +1,90 @@
+$border-size: 1px;
+
+$themes: (
+  classic: (
+    outside_border_color: #4a4242,
+    inside_border_color: #fddc6b,
+    background: (
+      first_color: #4d4d54,
+      second_color: #74747c,
+    ),
+  ),
+  red: (
+    outside_border_color: #4a4242,
+    inside_border_color: white,
+    background: (
+      first_color: #bd0031,
+      second_color: #ff4a6b,
+    ),
+  ),
+  blue: (
+    outside_border_color: #4a4242,
+    inside_border_color: white,
+    background: (
+      first_color: #0084bd,
+      second_color: #31c6f7,
+    ),
+  ),
+  green: (
+    outside_border_color: #4a4242,
+    inside_border_color: white,
+    background: (
+      first_color: #4ab500,
+      second_color: #94e76b,
+    ),
+  ),
+  orange: (
+    outside_border_color: #4a4242,
+    inside_border_color: white,
+    background: (
+      first_color: #de5200,
+      second_color: #ff9c31,
+    ),
+  ),
+  purple: (
+    outside_border_color: #4a4242,
+    inside_border_color: white,
+    background: (
+      first_color: #52319c,
+      second_color: #b584de,
+    ),
+  ),
+);
+
+@mixin box-theme($theme: map-get($themes, classic)) {
+  $background: map-get($theme, background);
+  border: $border-size solid map-get($theme, outside_border_color);
+  background-image: linear-gradient(
+    to top,
+    map-get($background, first_color),
+    map-get($background, second_color) 15%
+  );
+  &::before {
+    border: 1px solid map-get($theme, inside_border_color);
+  }
+}
+
+.box {
+  position: relative;
+  display: flex;
+  border-radius: 0.25em;
+  &::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: calc(100% - (2 * $border-size));
+    height: calc(100% - (2 * $border-size));
+    border-radius: 0.25em;
+  }
+  @include box-theme();
+  @each $theme-name, $theme in $themes {
+    &.#{"" + $theme-name} {
+      @include box-theme($theme);
+    }
+  }
+}
+.content {
+  flex: 1;
+  z-index: 1;
+}

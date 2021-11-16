@@ -1,0 +1,102 @@
+@import "../../../../../assets/sass/utils/mixins";
+
+$ground-positions: (
+  sand: (
+    day: -44px -138px,
+    afternoon: -321px -142px,
+    night: -602px -144px,
+    opponent: (
+      day: -208px -88px,
+      afternoon: -484px -92px,
+      night: -764px -94px,
+    ),
+  ),
+  snow: (
+    day: -45px -421px,
+    afternoon: -317px -422px,
+    night: -612px -422px,
+    opponent: (
+      day: -208px -371px,
+      afternoon: -480px -372px,
+      night: -775px -372px,
+    ),
+  ),
+  water: (
+    day: -46px -667px,
+    afternoon: -321px -671px,
+    night: -620px -675px,
+    opponent: (
+      day: -209px -617px,
+      afternoon: -484px -621px,
+      night: -783px -625px,
+    ),
+  ),
+  grass: (
+    day: -36px -946px,
+    afternoon: -336px -946px,
+    night: -625px -946px,
+    opponent: (
+      day: -198px -885px,
+      afternoon: -487px -896px,
+      night: -791px -894px,
+    ),
+  ),
+  field: (
+    day: -35px -1216px,
+    afternoon: -329px -1224px,
+    night: -614px -1232px,
+    opponent: (
+      day: -198px -1166px,
+      afternoon: -492px -1174px,
+      night: -777px -1182px,
+    ),
+  ),
+  indoor: (
+    day: -151px -1510px,
+    opponent: (
+      day: -313px -1460px,
+    ),
+  ),
+  rocky: (
+    day: -535px -1515px,
+    opponent: (
+      day: -698px -1465px,
+    ),
+  ),
+);
+
+@mixin day-position($day-time, $position) {
+  @if ($day-time == "day") {
+    object-position: $position;
+  } @else {
+    &.#{$day-time} {
+      object-position: $position;
+    }
+  }
+}
+
+@each $ground-type, $ground-map in $ground-positions {
+  .#{"" + $ground-type} {
+    @each $day-time, $position in $ground-map {
+      @if ($day-time == "opponent") {
+        &.opponent {
+          @each $opponent-day-time, $opponent-position in $position {
+            @include day-position($opponent-day-time, $opponent-position);
+          }
+        }
+      } @else {
+        @include day-position($day-time, $position);
+      }
+    }
+  }
+}
+
+.ground {
+  @include sprite;
+  width: 194px;
+  height: 23px;
+  &.opponent {
+    width: 126px;
+    height: 33px;
+  }
+}

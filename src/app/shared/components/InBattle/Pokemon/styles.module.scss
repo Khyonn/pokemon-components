@@ -1,0 +1,57 @@
+@use "sass:list";
+@import "../../../../../assets/sass/utils/mixins";
+
+$gap-top: 34px;
+
+$nb-lines: 17;
+$pokemon-per-lines: 10;
+$rest: 3;
+
+$frames-to-skip: 4, 14, 22, 24, 30, 32, 48, 50, 53, 55, 75, 77, 97, 99, 112, 127,
+  129, 136, 138, 143, 150, 152;
+
+@function should-skip($frame) {
+  @return list.index($frames-to-skip, $frame);
+}
+
+$positions: (
+  front_1: 0,
+  front_2: 1,
+  back_1: 2,
+  back_2: 3,
+);
+
+@function get-x($column, $position: map-get($positions, front_1)) {
+  @return (($column * 4 * 81px + 1px) + $position * 81) * -1;
+}
+@function get-y($line) {
+  @return ($line * 195px + 34px) * -1;
+}
+
+.pokemon {
+  @include sprite;
+  width: 80px;
+  height: 80px;
+  $column: 0;
+  $line: 0;
+  $pokemon-nb: 1;
+  @for $i from 1 through ($nb-lines * $pokemon-per-lines + $rest) {
+    @if (not should-skip($i)) {
+      &.n_#{$pokemon-nb} {
+        object-position: get-x($column) get-y($line);
+        @each $position-name, $position in $positions {
+          &_#{$position-name} {
+            object-position: get-x($column, $position) get-y($line);
+          }
+        }
+      }
+      $pokemon-nb: $pokemon-nb + 1;
+    }
+    @if ($i % 10 == 0) {
+      $line: $line + 1;
+      $column: 0;
+    } @else {
+      $column: $column + 1;
+    }
+  }
+}

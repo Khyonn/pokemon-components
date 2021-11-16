@@ -1,0 +1,24 @@
+@import "../../../../../assets/sass/utils/mixins";
+
+.Oak,
+.Lucas,
+.Dawn {
+  @include sprite;
+}
+.Oak {
+  object-position: -10px -3px;
+  width: 62px;
+  height: 123px;
+}
+
+.Lucas,
+.Dawn {
+  width: 48px;
+  height: 75px;
+}
+.Lucas {
+  object-position: -612px -715px;
+}
+.Dawn {
+  object-position: -612px -190px;
+}

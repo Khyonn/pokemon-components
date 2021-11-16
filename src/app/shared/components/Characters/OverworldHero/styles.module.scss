@@ -1,0 +1,235 @@
+$character-size: 30px;
+
+$step-size: 35px;
+
+$animations-columns: (
+  walking: (
+    up: 229px,
+    down: 18px,
+    left: 336px,
+    right: 123px,
+  ),
+  running: (
+    up: 229px,
+    down: 18px,
+    left: 334px,
+    right: 123px,
+  ),
+  cycling: (
+    up: 53px,
+    down: 53px,
+    left: 193px,
+    right: 193px,
+  ),
+  fishing: (
+    up: 389px,
+    down: 389px,
+    left: 528px,
+    right: 528px,
+  ),
+);
+
+$animations-lines: (
+  Dawn: (
+    up: (
+      walking: 33px,
+      running: 99px,
+      cycling: 330px,
+      fishing: 330px,
+    ),
+    down: (
+      walking: 33px,
+      running: 99px,
+      cycling: 296px,
+      fishing: 296px,
+    ),
+    left: (
+      walking: 33px,
+      running: 99px,
+      cycling: 330px,
+      fishing: 330px,
+    ),
+    right: (
+      walking: 33px,
+      running: 99px,
+      cycling: 296px,
+      fishing: 296px,
+    ),
+  ),
+  Lucas: (
+    up: (
+      walking: 558px,
+      running: 624px,
+      cycling: 855px,
+      fishing: 855px,
+    ),
+    down: (
+      walking: 558px,
+      running: 624px,
+      cycling: 821px,
+      fishing: 821px,
+    ),
+    left: (
+      walking: 558px,
+      running: 624px,
+      cycling: 855px,
+      fishing: 855px,
+    ),
+    right: (
+      walking: 558px,
+      running: 624px,
+      cycling: 821px,
+      fishing: 821px,
+    ),
+  ),
+);
+
+@function get-column($direction: down, $animation: walking) {
+  @return 0 - map-get(map-get($animations-columns, $animation), $direction);
+}
+@function get-line($character: Dawn, $direction: down, $animation: walking) {
+  @return 0 -
+    map-get(
+      map-get(map-get($animations-lines, $character), $direction),
+      $animation
+    );
+}
+
+@mixin animation_fishing($character, $direction) {
+  $first-column: get-column($direction, fishing);
+  @keyframes #{$character}_fishing_#{$direction} {
+    from,
+    25%,
+    25.99% {
+      @if ($direction == "left") {
+        background-position-x: $first-column + 5px;
+      } @else if ($direction == "right") {
+        background-position-x: $first-column - 5px;
+      } @else {
+        background-position-x: $first-column;
+      }
+    }
+    26%,
+    50%,
+    50.99% {
+      @if ($direction == "left") {
+        background-position-x: $first-column - $step-size + 5px;
+      } @else if ($direction == "right") {
+        background-position-x: $first-column - $step-size - 5px;
+      } @else {
+        background-position-x: $first-column - $step-size;
+        @if ($direction == "down") {
+          background-position-y: get-line($character, $direction, fishing);
+        }
+      }
+    }
+    51%,
+    75%,
+    75.99% {
+      background-position-x: $first-column - 2 * $step-size;
+      @if ($direction == "down") {
+        background-position-y: get-line($character, $direction, fishing) + 5px;
+      }
+    }
+    76%,
+    to {
+      background-position-x: $first-column - 3 * $step-size;
+      @if ($direction == "down") {
+        background-position-y: get-line($character, $direction, fishing) + 5px;
+      }
+    }
+  }
+}
+
+@mixin generic_animation($character, $direction, $animation) {
+  $first-column: get-column($direction, $animation);
+  @keyframes #{$character}_#{$animation}_#{$direction} {
+    from,
+    25%,
+    25.99% {
+      background-position-x: $first-column;
+    }
+    26%,
+    50%,
+    50.99% {
+      background-position-x: $first-column - $step-size;
+    }
+    51%,
+    75%,
+    75.99% {
+      background-position-x: $first-column;
+    }
+    76%,
+    to {
+      background-position-x: $first-column - 2 * $step-size;
+    }
+  }
+}
+
+@each $character, $directions in $animations-lines {
+  @each $direction, $animations in $directions {
+    @each $animation, $_ in $animations {
+      @if ($animation == "fishing") {
+        @include animation_fishing($character, $direction);
+      } @else {
+        @include generic_animation($character, $direction, $animation);
+      }
+    }
+  }
+}
+
+.character {
+  // to hide original img src
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: $character-size ($character-size) 0 0;
+
+  // other css rules
+  display: inline-block;
+  background-image: url("../../../../../assets/images/character.png");
+  image-rendering: pixelated;
+  width: $character-size;
+  height: $character-size;
+  // default: girl standing down
+  background-position: get-column() get-line();
+  @each $character, $directions in $animations-lines {
+    &.#{$character} {
+      // default: standing down
+      background-position: get-column() get-line($character);
+      @each $direction, $animations in $directions {
+        &.#{$direction} {
+          // default: standing
+          background-position: get-column($direction)
+            get-line($character, $direction);
+          @each $animation, $column in $animations {
+            &.#{$animation} {
+              @if ($animation == "fishing") {
+                @if ($direction == "down") {
+                  height: $character-size + 5px;
+                  padding: $character-size ($character-size + 5px) 0 0;
+                }
+              }
+              background-position-y: get-line(
+                $character,
+                $direction,
+                $animation
+              );
+              @if ($animation == "fishing") {
+                animation: #{$character}_#{$animation}_#{$direction}
+                  0.8s
+                  steps(4)
+                  forwards;
+              } @else {
+                animation: #{$character}_#{$animation}_#{$direction}
+                  0.8s
+                  steps(4)
+                  infinite;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

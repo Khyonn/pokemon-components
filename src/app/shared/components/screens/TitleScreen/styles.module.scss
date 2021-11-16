@@ -1,0 +1,11 @@
+@import "../../../../../assets/sass/utils/mixins";
+
+.wrapper {
+  @include screen;
+  flex-direction: column;
+  align-items: center;
+}
+.title {
+  font-size: 1em;
+  margin: 0;
+}

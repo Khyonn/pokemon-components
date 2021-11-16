@@ -1,0 +1,165 @@
+@use "sass:math";
+
+$bar-color: (
+  green: (
+    first: #a3da8d,
+    second: #66c242,
+    third: #4c9a26,
+  ),
+  yellow: (
+    first: #f7d78a,
+    second: #f1bc3c,
+    third: #b47c29,
+  ),
+  red: (
+    first: #da8d8d,
+    second: #c24242,
+    third: #9a2626,
+  ),
+  blue: (
+    first: #c3dcfb,
+    second: #68a6f4,
+    third: #467bda,
+  ),
+);
+
+@mixin opponent-lifebar-background($color: green) {
+  background-image: linear-gradient(
+      to top,
+      map-get(map-get($bar-color, $color), first),
+      map-get(map-get($bar-color, $color), second) 20%,
+      map-get(map-get($bar-color, $color), second) 80%,
+      map-get(map-get($bar-color, $color), third)
+    ),
+    url("../../../../../assets/images/life-bar.png");
+}
+
+.opponent-lifebar {
+  @include opponent-lifebar-background();
+  width: 120px;
+  height: 35px;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding-top: 35px;
+  padding-left: 120px;
+  background-repeat: no-repeat;
+  background-position: 50px 25px, 0 0;
+  background-size: 48px 3px, auto;
+  @for $hp from 0 through 100 {
+    &.hp-#{$hp} {
+      @if ($hp < 25) {
+        @include opponent-lifebar-background(red);
+      } @else if ($hp < 55) {
+        @include opponent-lifebar-background(yellow);
+      }
+      background-size: math.div(48px * $hp, 100) 3px, auto;
+    }
+  }
+}
+
+@mixin lifebar-background($color: green) {
+  background-image: linear-gradient(
+      to top,
+      map-get(map-get($bar-color, $color), first),
+      map-get(map-get($bar-color, $color), second) 20%,
+      map-get(map-get($bar-color, $color), second) 80%,
+      map-get(map-get($bar-color, $color), third)
+    ),
+    linear-gradient(
+      to top,
+      map-get(map-get($bar-color, blue), first),
+      map-get(map-get($bar-color, blue), second) 20%,
+      map-get(map-get($bar-color, blue), second) 80%,
+      map-get(map-get($bar-color, blue), third)
+    ),
+    url("../../../../../assets/images/life-bar.png");
+}
+
+@mixin xp-bar($xp, $hp: 100) {
+  background-size: math.div(48px * $hp, 100) 3px, math.div(96px * $xp, 100) 2px,
+    auto;
+}
+
+.lifebar {
+  @include lifebar-background();
+  width: 127px;
+  height: 48px;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding-top: 48px;
+  padding-left: 127px;
+  background-repeat: no-repeat;
+  background-position: 71px 27px, 23px 44px, -130px 0;
+  background-size: 48px 3px, 0 2px, auto;
+  @for $hp from 0 through 100 {
+    &.hp-#{$hp} {
+      @if ($hp < 25) {
+        @include lifebar-background(red);
+      } @else if ($hp < 55) {
+        @include lifebar-background(yellow);
+      }
+      background-size: math.div(48px * $hp, 100) 3px, 0 2px, auto;
+
+      @for $xp from 0 through 100 {
+        &.xp-#{$xp} {
+          @include xp-bar($xp, $hp);
+        }
+      }
+    }
+  }
+  @for $xp from 0 through 100 {
+    &.xp-#{$xp} {
+      @include xp-bar($xp);
+    }
+  }
+}
+
+.lifebar_wrapper {
+  display: inline-block;
+  position: relative;
+  font-size: 0.81rem;
+}
+.name {
+  position: absolute;
+  top: 9px;
+  left: 21px;
+  line-height: 13px;
+  text-transform: uppercase;
+}
+.level {
+  position: absolute;
+  top: 10.5px;
+  left: 104px;
+  font-size: 0.95em;
+  font-weight: bold;
+  line-height: 11px;
+}
+.opponent {
+  &.name {
+    top: 6px;
+    left: 5px;
+  }
+  &.level {
+    left: 83px;
+    top: 9px;
+  }
+}
+
+.current_hp {
+  position: absolute;
+  bottom: 10px;
+  left: 75px;
+  font-size: 0.85em;
+  font-weight: bold;
+  line-height: 10px;
+}
+.max_hp {
+  position: absolute;
+  bottom: 10px;
+  left: 100px;
+  font-size: 0.85em;
+  font-weight: bold;
+  line-height: 10px;
+}
